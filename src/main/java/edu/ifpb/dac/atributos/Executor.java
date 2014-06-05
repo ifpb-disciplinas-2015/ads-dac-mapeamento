@@ -1,0 +1,83 @@
+package edu.ifpb.dac.atributos;
+
+import edu.ifpb.dac.atributos.Pessoa.Sexo;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.Date;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
+/**
+ *
+ * @author Ricardo Job
+ */
+public class Executor {
+
+    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("mapeamento");
+    private static EntityManager em = emf.createEntityManager();
+
+    public static void main(String[] args) {
+        Endereco endereco = new Endereco("Sua rua", "Seu bairro");
+        Pessoa pessoa = new Pessoa();
+        pessoa.setAniversario(new Date());
+        pessoa.setCpf("12345");
+        pessoa.setNome("Job");
+        pessoa.setSexo(Sexo.Masculino);
+        pessoa.setVersao("1.0.0");
+        pessoa.setEndereco(endereco);
+        //Foto a ser salva 640x480
+        pessoa.setFoto(carregaArquivo("/imagens/chaves.jpg"));
+        salvar(pessoa);
+        //Localizando e exibindo a foto
+        exibeFoto(pessoa.getId());
+    }
+
+    private static void exibeFoto(int id) {
+
+        em.getTransaction().begin();
+        Pessoa p = localizar(id);      
+        new ExibeFoto(p.getFoto()).setVisible(true);
+        em.getTransaction().commit();
+    }
+
+    public static void salvar(Object object) {
+        em.getTransaction().begin();
+        try {
+            em.persist(object);
+            em.getTransaction().commit();
+            System.out.println("Sucesso!!");
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+        }
+    }
+
+    public static Pessoa localizar(Object object) {
+        return em.find(Pessoa.class, object);
+    }
+
+    public static byte[] carregaArquivo(String nomeArquivo) {
+        try {
+            URL url = Executor.class.getResource(nomeArquivo);
+            File arquivo = new File(url.toURI());
+            byte[] ramFoto = new byte[(int) arquivo.length()];
+            try (FileInputStream fis = new FileInputStream(arquivo)) {
+                byte[] buffer = new byte[1024 * 4];
+                int bytesLidos = -1;
+                int inicio = 0;
+                while ((bytesLidos = fis.read(buffer)) != -1) {
+                    System.arraycopy(buffer, 0, ramFoto, inicio, bytesLidos);
+                    inicio += bytesLidos;
+                }
+            }
+            return ramFoto;
+        } catch (URISyntaxException | IOException e) {
+            return null;
+        }
+
+    }
+}
