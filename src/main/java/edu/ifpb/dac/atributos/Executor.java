@@ -1,7 +1,8 @@
 package edu.ifpb.dac.atributos;
 
+import edu.ifpb.dac.Dao;
+import edu.ifpb.dac.DaoJPA;
 import edu.ifpb.dac.atributos.Pessoa.Sexo;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -17,49 +18,38 @@ import javax.persistence.Persistence;
  * @author Ricardo Job
  */
 public class Executor {
-
-    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("mapeamento");
-    private static EntityManager em = emf.createEntityManager();
+    
+    static Dao dao = new DaoJPA("mapeamento");
+//    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("mapeamento");
+//    private static EntityManager em = emf.createEntityManager();
 
     public static void main(String[] args) {
-        Endereco endereco = new Endereco("Sua rua", "Seu bairro");
+        
+        Endereco endereco = new Endereco("Vila do Kiko", " Bairro do Kiko");
         Pessoa pessoa = new Pessoa();
         pessoa.setAniversario(new Date());
-        pessoa.setCpf("12345");
-        pessoa.setNome("Job");
-        pessoa.setSexo(Sexo.Masculino);
+        pessoa.setCpf("097766");
+        pessoa.setNome("Chiquinha");
+        pessoa.setSexo(Sexo.Feminino);
         pessoa.setVersao("1.0.0");
         pessoa.setEndereco(endereco);
         //Foto a ser salva 640x480
-        pessoa.setFoto(carregaArquivo("/imagens/chaves.jpg"));
-        salvar(pessoa);
+        pessoa.setFoto(carregaArquivo("/imagens/Chiquinha.jpg"));
+        //dao.save(pessoa);
         //Localizando e exibindo a foto
-        exibeFoto(pessoa.getId());
+        //exibeFoto(pessoa.getId());
+        
+        exibeFoto(23);
     }
-
+    
     private static void exibeFoto(int id) {
 
-        em.getTransaction().begin();
-        Pessoa p = localizar(id);      
+//        em.getTransaction().begin();
+        Pessoa p = (Pessoa) dao.find(Pessoa.class, id);
         new ExibeFoto(p.getFoto()).setVisible(true);
-        em.getTransaction().commit();
+//        em.getTransaction().commit();
     }
-
-    public static void salvar(Object object) {
-        em.getTransaction().begin();
-        try {
-            em.persist(object);
-            em.getTransaction().commit();
-            System.out.println("Sucesso!!");
-        } catch (Exception e) {
-            em.getTransaction().rollback();
-        }
-    }
-
-    public static Pessoa localizar(Object object) {
-        return em.find(Pessoa.class, object);
-    }
-
+    
     public static byte[] carregaArquivo(String nomeArquivo) {
         try {
             URL url = Executor.class.getResource(nomeArquivo);
@@ -78,6 +68,6 @@ public class Executor {
         } catch (URISyntaxException | IOException e) {
             return null;
         }
-
+        
     }
 }

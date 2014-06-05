@@ -42,6 +42,15 @@ public class PessoaPKEmbedded implements Serializable {
         return true;
     }
 
+    public String getNome() {
+        return nome;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    
     @Override
     public int hashCode() {
         int hash = 3;

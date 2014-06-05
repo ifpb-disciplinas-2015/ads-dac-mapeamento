@@ -1,8 +1,7 @@
 package edu.ifpb.dac.embedded;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import edu.ifpb.dac.Dao;
+import edu.ifpb.dac.DaoJPA;
 
 /**
  *
@@ -10,33 +9,16 @@ import javax.persistence.Persistence;
  */
 public class Executor {
 
-    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("mapeamento");
-    private static EntityManager em = emf.createEntityManager();
-
+    static Dao dao = new DaoJPA("mapeamento");
+    
     public static void main(String[] args) {
         PessoaPKEmbedded key = new PessoaPKEmbedded("Ricardo Job", "123");
         PessoaChaveCompostaEmbedded pessoa = new PessoaChaveCompostaEmbedded(key);
-        salvar(pessoa);
+        dao.save(pessoa);
         //Localizando
-//        PessoaPKEmbedded chave = new PessoaPKEmbedded("Job", "123");
-//        PessoaChaveCompostaEmbedded copia = localizarEmbedded(chave);
-//        System.out.println(copia);
+        PessoaPKEmbedded chave = new PessoaPKEmbedded("Ricardo Job", "123");
+        PessoaChaveCompostaEmbedded copia = (PessoaChaveCompostaEmbedded) dao.find(PessoaChaveCompostaEmbedded.class, chave);//localizarEmbedded(chave);
+        System.out.println(copia);
 
-    }
-
-    public static void salvar(Object object) {
-        em.getTransaction().begin();
-        try {
-            em.persist(object);
-            em.getTransaction().commit();
-            System.out.println("Sucesso!!");
-        } catch (Exception e) {
-            e.printStackTrace();
-            em.getTransaction().rollback();
-        }
-    }
-
-    public static PessoaChaveCompostaEmbedded localizarEmbedded(Object object) {
-        return em.find(PessoaChaveCompostaEmbedded.class, object);
     }
 }
