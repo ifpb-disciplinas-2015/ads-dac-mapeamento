@@ -1,8 +1,12 @@
 package edu.ifpb.dac.atributos;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -13,6 +17,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
@@ -30,7 +35,11 @@ public class Pessoa implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
     generator = "pessoa_ID")
     private int id;
-
+    
+    @ElementCollection
+    @CollectionTable(name = "Emails")
+    private List<String> emails = new ArrayList<String>();
+    
     @Transient
     private String versao;
 
@@ -62,6 +71,18 @@ public class Pessoa implements Serializable {
         return aniversario;
     }
 
+    public List<String> getEmails() {
+        return emails;
+    }
+
+    public void setEmails(List<String> emails) {
+        this.emails = emails;
+    }
+    
+    public void addEmail(String email){
+        this.emails.add(email);
+    }
+    
     public void setAniversario(Date aniversario) {
         this.aniversario = aniversario;
     }

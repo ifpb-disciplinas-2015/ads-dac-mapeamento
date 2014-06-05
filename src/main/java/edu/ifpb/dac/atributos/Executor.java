@@ -9,9 +9,6 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Date;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 /**
  *
@@ -33,13 +30,15 @@ public class Executor {
         pessoa.setSexo(Sexo.Feminino);
         pessoa.setVersao("1.0.0");
         pessoa.setEndereco(endereco);
+        pessoa.addEmail("chiquinha@gmail.com");
+        pessoa.addEmail("chiquinha2@hotmail.com");
         //Foto a ser salva 640x480
         pessoa.setFoto(carregaArquivo("/imagens/Chiquinha.jpg"));
-        //dao.save(pessoa);
+        dao.save(pessoa);
         //Localizando e exibindo a foto
-        //exibeFoto(pessoa.getId());
+        exibeFoto(pessoa.getId());
         
-        exibeFoto(23);
+//        exibeFoto(23);
     }
     
     private static void exibeFoto(int id) {
