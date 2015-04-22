@@ -9,15 +9,15 @@ package ifpb.dac.contexto;
  *
  * @author job
  */
-public interface DAO {
+public interface DAO<T> {
     
-    public boolean salvar(Object obj);
+    public boolean salvar(T obj);
     
-    public boolean atualizar(Object obj);
+    public boolean atualizar(T obj);
     
-    public boolean excluir(Object obj);
+    public boolean excluir(T obj);
     
-    public Object buscar(Object chave, Class entidade);
+    public T buscar(Object chave, Class<T> entidade);
     
     
 }

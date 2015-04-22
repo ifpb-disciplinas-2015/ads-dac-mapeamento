@@ -8,7 +8,7 @@ import javax.persistence.Persistence;
 /**
  * @author job
  */
-public class DAOJPA implements DAO{
+public class DAOJPA<T> implements DAO<T>{
     
     private EntityManager entityManager;
     
@@ -22,7 +22,7 @@ public class DAOJPA implements DAO{
     }
     
     @Override
-    public boolean salvar(Object obj) {
+    public boolean salvar(T obj) {
         EntityTransaction transacao=entityManager.getTransaction();
         
         try{
@@ -39,7 +39,7 @@ public class DAOJPA implements DAO{
     }
 
     @Override
-    public boolean atualizar(Object obj) {
+    public boolean atualizar(T obj) {
         EntityTransaction transacao=entityManager.getTransaction();
         
         try{
@@ -55,7 +55,7 @@ public class DAOJPA implements DAO{
     }
 
     @Override
-    public boolean excluir(Object obj) {
+    public boolean excluir(T obj) {
         EntityTransaction transacao=entityManager.getTransaction();
         
         try{
@@ -69,9 +69,11 @@ public class DAOJPA implements DAO{
             return false;
         }
     }
+ 
+     
 
     @Override
-    public Object buscar(Object chave, Class entidade) {
+    public T buscar(Object chave, Class<T> entidade) {
         return entityManager.find(entidade, chave);
     }
 
