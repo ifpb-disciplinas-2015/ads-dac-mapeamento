@@ -40,17 +40,39 @@ public class DAOJPA implements DAO{
 
     @Override
     public boolean atualizar(Object obj) {
-        return false; //To change body of generated methods, choose Tools | Templates.
+        EntityTransaction transacao=entityManager.getTransaction();
+        
+        try{
+           transacao.begin();
+           entityManager.merge(obj);
+           transacao.commit();   
+           return true;
+        }catch(Exception ex){
+            if(transacao.isActive())
+               transacao.rollback();
+            return false;
+        }
     }
 
     @Override
     public boolean excluir(Object obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        EntityTransaction transacao=entityManager.getTransaction();
+        
+        try{
+           transacao.begin();
+           entityManager.remove(obj);
+           transacao.commit();   
+           return true;
+        }catch(Exception ex){
+            if(transacao.isActive())
+               transacao.rollback();
+            return false;
+        }
     }
 
     @Override
     public Object buscar(Object chave, Class entidade) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return entityManager.find(entidade, chave);
     }
 
 }
