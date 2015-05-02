@@ -3,6 +3,7 @@
   <persistence-unit name="mapeamento" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>edu.ifpb.dac.atributos.Pessoa</class>
+    <class>edu.ifpb.dac.atributos.Aluno</class>
     <class>edu.ifpb.dac.embedded.PessoaChaveCompostaEmbedded</class>
     <class>edu.ifpb.dac.idClass.PessoaChaveComposta</class>
     <properties>

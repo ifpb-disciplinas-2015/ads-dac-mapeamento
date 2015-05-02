@@ -22,23 +22,37 @@ public class Executor {
 
     public static void main(String[] args) {
         
-        Endereco endereco = new Endereco("Vila do Kiko", " Bairro do Kiko");
+        Endereco endereco = new Endereco("Vila do Chaves", " Bairro do Kiko");
         Pessoa pessoa = new Pessoa();
         pessoa.setAniversario(new Date());
         pessoa.setCpf("097766");
-        pessoa.setNome("Chiquinha");
-        pessoa.setSexo(Sexo.Feminino);
+        pessoa.setNome("Chaves");
+        pessoa.setSexo(Sexo.Masculino);
         pessoa.setVersao("1.0.0");
         pessoa.setEndereco(endereco);
-        pessoa.addEmail("chiquinha@gmail.com");
-        pessoa.addEmail("chiquinha2@hotmail.com");
+        pessoa.addEmail("chaves@gmail.com");
+        pessoa.addEmail("chaves2@hotmail.com");
         //Foto a ser salva 640x480
-        pessoa.setFoto(carregaArquivo("/imagens/Chiquinha.jpg"));
-        dao.save(pessoa);
+        pessoa.setFoto(carregaArquivo("/imagens/chaves.jpg"));
+       // dao.save(pessoa);
         //Localizando e exibindo a foto
-        exibeFoto(pessoa.getId());
+        //exibeFoto(pessoa.getId());
         
-//        exibeFoto(23);
+       //exibeFoto(40);
+        
+        Aluno aluno = new Aluno("Job", "12365");       
+         dao.save(aluno);
+        aluno = new Aluno("kiko", "5896");       
+         dao.save(aluno);
+//        Aluno a = (Aluno) dao.find(Aluno.class, 401);
+//        System.out.print("Antes da atualização: "+a);
+//        System.out.println("\tmatricula: "+a.getMatriculaFormatada());
+//        a.setMatricula("265555");
+////        dao.update(a);
+//        a = (Aluno) dao.find(Aluno.class, 401);
+//        System.out.print("Depois da atualização: "+a);
+//        System.out.println("\tmatricula: "+a.getMatriculaFormatada());
+        
     }
     
     private static void exibeFoto(int id) {
