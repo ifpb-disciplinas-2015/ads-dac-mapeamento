@@ -2,8 +2,6 @@ package ifpb.dac.contexto;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.annotation.Generated;
-import javax.persistence.AttributeOverrides;
 import javax.persistence.Basic;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
