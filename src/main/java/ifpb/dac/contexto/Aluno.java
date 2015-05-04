@@ -15,7 +15,7 @@ import javax.persistence.Transient;
  * @author Ricardo Job
  */
 @Entity
-@Access(AccessType.FIELD)
+//@Access(AccessType.FIELD)
 public class Aluno implements Serializable {
 
     @Id
@@ -33,7 +33,7 @@ public class Aluno implements Serializable {
     @Transient
     private Matricula matricula;
 
-//    @Access(AccessType.PROPERTY)
+    @Access(AccessType.PROPERTY)
 //    @Column(name = "matricula_aluno")
     public String getMatriculaSimples() {
         return this.matricula.simples();
