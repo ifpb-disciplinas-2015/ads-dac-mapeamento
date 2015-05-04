@@ -33,8 +33,8 @@ public class Aluno implements Serializable {
     @Transient
     private Matricula matricula;
 
-    @Access(AccessType.PROPERTY)
-    @Column(name = "matricula_aluno")
+//    @Access(AccessType.PROPERTY)
+//    @Column(name = "matricula_aluno")
     public String getMatriculaSimples() {
         return this.matricula.simples();
     }
